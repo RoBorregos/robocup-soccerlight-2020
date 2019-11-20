@@ -8,13 +8,13 @@ const int motor3A = 4;
 const int motor3B = 5;
 int power = 255;
 
-float deg(float dir)
-{
+float deg(float dir){
+  // return radians from degrees
   return (dir * 71) / 4068;
 }
 
-void motors(int dir)
-{
+void motors(int dir){
+  // set motors to move in direction dir degrees
   float A = cos(deg(150-dir));
   float B = cos(deg(30-dir));
   float C = cos(deg(270-dir));
@@ -49,7 +49,7 @@ void motors(int dir)
 }
 
 void turn(bool dir){
-  if (dir) {
+  if (dir) { // true turns right
     analogWrite(motor1A, 0);
     analogWrite(motor1B, 255);
     analogWrite(motor2A, 0);
@@ -57,7 +57,7 @@ void turn(bool dir){
     analogWrite(motor3A, 0);
     analogWrite(motor3B, 255);
   }
-  if (!dir) {
+  if (!dir) { // false turns left
     analogWrite(motor1A, 255);
     analogWrite(motor1B, 0);
     analogWrite(motor2A, 255);
@@ -68,6 +68,7 @@ void turn(bool dir){
 }
 
 void motorsOFF(){
+  // turn Off all motors
   analogWrite(motor1A, 0);
   analogWrite(motor1B, 0);
   analogWrite(motor2A, 0);
@@ -116,14 +117,17 @@ void star(){
 }
 
 void setup() {
-    /* Motors Setup */
+  // Setup motors
   pinMode(motor1A, OUTPUT);
   pinMode(motor1B, OUTPUT);
   pinMode(motor2A, OUTPUT);
   pinMode(motor2B, OUTPUT);
   pinMode(motor3A, OUTPUT);   
   pinMode(motor3B, OUTPUT);
+
+  // Set up Serial
   Serial.begin(9600);
+
   delay(2000);
   star();
   motorsOFF();
