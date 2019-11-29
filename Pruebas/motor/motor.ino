@@ -15,14 +15,15 @@ float deg(float dir){
 
 void motors(int dir){
   // set motors to move in direction dir degrees
-  float A = cos(deg(150-dir));
-  float B = cos(deg(30-dir));
-  float C = cos(deg(270-dir));
-  int speedA = int(A*255);
-  int speedB = int(B*255);
-  int speedC = int(C*255);
+  dir = 360 - dir;
+  float m1 = cos(deg(150-dir));
+  float m2 = cos(deg(30-dir));
+  float m3 = cos(deg(270-dir));
+  int speedA = int(m1*255);
+  int speedB = int(m2*255);
+  int speedC = int(m3*255);
   
-  if (A >= 0){
+  if (m1 >= 0){
     analogWrite(motor1A, speedA);
     analogWrite(motor1B, 0);
   }
@@ -30,7 +31,7 @@ void motors(int dir){
     analogWrite(motor1A, 0);
     analogWrite(motor1B, abs(speedA));
   }
-  if (B >= 0){
+  if (m2 >= 0){
     analogWrite(motor2A, speedB);
     analogWrite(motor2B, 0);
   }
@@ -38,7 +39,7 @@ void motors(int dir){
     analogWrite(motor2A, 0);
     analogWrite(motor2B, abs(speedB));
   }
-  if (C >= 0){
+  if (m3 >= 0){
     analogWrite(motor3A, speedC);
     analogWrite(motor3B, 0);
   }
@@ -128,8 +129,8 @@ void setup() {
   // Set up Serial
   Serial.begin(9600);
 
-  delay(2000);
-  star();
+  motors(-225);
+  delay(800);
   motorsOFF();
 
 }
