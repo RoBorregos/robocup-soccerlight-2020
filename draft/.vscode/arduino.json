@@ -1,8 +1,0 @@
-{
-    "port": "COM3",
-    "programmer": "ArduinoISP",
-    "board": "arduino:avr:mega",
-    "configuration": "cpu=atmega2560",
-    "sketch": "draft.ino",
-    "output": "../ArduinoOutput"
-}

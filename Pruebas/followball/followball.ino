@@ -81,6 +81,56 @@ void motorsOFF(){
   analogWrite(motor3B, 0);
 }
 
+void chace(){
+  InfraredResult InfraredBall = InfraredSeeker::ReadAC();
+  if(InfraredBall.Direction == 5){
+    motors(0);
+  }
+  else if(InfraredBall.Direction == 0){
+    motorsOFF();
+  }
+  else if(InfraredBall.Direction < 5){
+    turn(false);
+  }
+  else{
+    turn(true);
+  }
+}
+
+void defend(){
+  InfraredResult InfraredBall = InfraredSeeker::ReadAC();
+  if(InfraredBall.Direction == 1){
+    motors(-165);
+  }
+  if(InfraredBall.Direction == 2){
+    motors(-135);
+  }
+  if(InfraredBall.Direction == 3){
+    motors(-105);
+  }
+  if(InfraredBall.Direction == 4){
+    motors(-75);
+  }
+  if(InfraredBall.Direction == 5){
+    motors(0);
+  }
+  if(InfraredBall.Direction == 6){
+    motors(75);
+  }
+  if(InfraredBall.Direction == 7){
+    motors(105);
+  }
+  if(InfraredBall.Direction == 8){
+    motors(135);
+  }
+  if(InfraredBall.Direction == 9){
+    motors(165);
+  }
+  if(InfraredBall.Direction == 0){
+    motorsOFF();
+  }
+}
+
 void setup()
 {
   Serial.begin(9600);
@@ -101,17 +151,6 @@ void setup()
 
 void loop()
 {   
-  InfraredResult InfraredBall = InfraredSeeker::ReadAC();
-  if(InfraredBall.Direction == 5){
-    motors(0);
-  }
-  else if(InfraredBall.Direction == 0){
-    motorsOFF();
-  }
-  else if(InfraredBall.Direction < 5){
-    turn(false);
-  }
-  else{
-    turn(true);
-  }
+  // chace();
+  defend();
 }
