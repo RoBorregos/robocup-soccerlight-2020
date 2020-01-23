@@ -15,6 +15,21 @@ void seeker(){
       break;
     case 5: //Front
       motors();
+      VL53L0X_RangingMeasurementData_t measure;
+      lox.rangingTest(&measure, false);
+      if (measure.RangeStatus != 4 && measure.RangeMilliMeter <= RANGE) { 
+          pixy.ccc.getBlocks();
+          if (pixy.ccc.numBlocks){
+            if(pixy.ccc.blocks[0].m_width < 100){
+              if(pixy.ccc.blocks[0].m_x < 0 + 80){
+                motors(-45); 
+              }
+              if(pixy.ccc.blocks[0].m_x > 316 - 80){
+                motors(45); 
+              }
+            }
+          }
+        }
       break;
     case 6: //Front Right
       motors(120);
@@ -29,8 +44,7 @@ void seeker(){
       motors(180);
       break;
     case 0: //Back
-      //TODO
+      motors(120);
       break;
-  }
-  
+  } 
 }

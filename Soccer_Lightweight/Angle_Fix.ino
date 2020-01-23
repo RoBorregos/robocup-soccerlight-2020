@@ -13,34 +13,29 @@ int error(float actual, float final = 0){
   return total;
 }
 
-void BNOAngleCheck()
-{
-  sensors_event_t event;
-  bno.getEvent(&event);
-  orientationAngle = ((int(event.orientation.x) - BNOSetPoint) + 360) % 360;
-  Serial.println(orientationAngle);
-}
-
 void angleFix(){
-  BNOAngleCheck();
-
   if(millis() < angleFixTime + 15){
     return;
   }
   
+  imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
   angleFixTime = millis();
-  int fix = error(orientationAngle);
-  if(abs(fix) > 20){
-    while(abs(fix) > 20){
-      if(fix > 20){
+  ::fix = error(euler.x());
+  
+  if(abs(::fix) > TOLERANCE){
+    while(abs(::fix) > TOLERANCE){
+      if(::fix > 0){
         turn(true);
+        Serial.println("Turn Right");
       }
       else{
         turn(false);
+        Serial.println("Turn Left");
       }
-      BNOAngleCheck();
-      int fix = error(orientationAngle);
+      imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+      ::fix = error(euler.x());
     }
     motorsOff();
   } 
+  Serial.println("BNO055 within tolerance");
 }
