@@ -1,13 +1,7 @@
 void photoresistors(){
   /* Function to detect if photoresistors detect a white line */
   int range = 500; // number at which a white line is detected
-  
-  bool front = 0;
-  bool right = 0;
-  bool left = 0;
-  bool backright = 0;
-  bool backleft = 0;
-  
+    
   for (int i:pr_front){
     if (i > range){
       front = 1;

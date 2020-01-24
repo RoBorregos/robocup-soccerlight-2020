@@ -7,6 +7,7 @@ void photoresistors();
 void commsToMega(bool, bool, bool, bool, bool);
 int mux(bool, bool, bool, bool);
 void distance();
+void interrupt();
 
 /* Nano te Mega Communication*/
 const int COMPIN1 = 1;
@@ -24,6 +25,12 @@ int pr_left[5] = {0, 0, 0, 0, 0};
 int pr_backright[2] = {0, 0};
 int pr_backleft[2] = {0, 0};
 
+bool front = 0;
+bool right = 0;
+bool left = 0;
+bool backright = 0;
+bool backleft = 0;
+
 const int PR1 = A1;
 const int PR2 = A2;
 const int PR3 = A3;
@@ -35,6 +42,9 @@ const int S0 = 1;
 const int S1 = 2;
 const int S2 = 3;
 const int S3 = 4;
+
+/* Interrupt Pin */
+const int INTRR = 5;
 
 void setup() {
   /* Initialize serial communication */
@@ -55,4 +65,5 @@ void loop() {
   /* update array */
   photoresistors();
   linesPrint();
+  interrupt();
 }
