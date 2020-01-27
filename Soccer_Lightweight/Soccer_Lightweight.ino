@@ -50,6 +50,8 @@ const int MOTOR2B = 3;
 const int MOTOR3A = 4; 
 const int MOTOR3B = 5;
 
+int dirAngle = 0;
+
 /* Photoresisters Variables */
 const int NANOPIN1 = 1;
 const int NANOPIN2 = 1;

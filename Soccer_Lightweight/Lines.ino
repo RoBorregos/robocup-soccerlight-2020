@@ -2,6 +2,8 @@ void lines(){
   /* Read data from arduino nano and act accordingly */
   Serial.println("Linea detectada");
   
+  // regresar angulo
+  
   int nano1 = digitalRead(NANOPIN1);
   int nano2 = digitalRead(NANOPIN2);
   int nano3 = digitalRead(NANOPIN3);
