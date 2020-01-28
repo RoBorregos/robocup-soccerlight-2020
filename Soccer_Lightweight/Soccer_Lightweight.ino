@@ -15,6 +15,7 @@ void motors(int);
 void turn(bool);
 int orientationStatus();
 void seeker();
+bool bouncing();
 
 /* Pixy Object */
 Pixy2 pixy;
@@ -63,6 +64,9 @@ const int NANOPIN6 = 1;
 
 /* Interrupt Variables */
 const int INTERRUPT = 2;
+volatile int linesCount = 0;
+int timeTrack = 0;
+bool bounce = false;
 
 void setup() {
   /* Initialize serial communication */
@@ -140,6 +144,13 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
+  timeTrack = millis();
   seeker2();
   angleFix();
+  cli(); // disable interrupts
+  bounce = bouncing();
+  sei(); // enable interrupts
+  if (bounce){
+    delay(300);
+  }
 }
