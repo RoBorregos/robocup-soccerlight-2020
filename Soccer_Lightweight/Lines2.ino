@@ -21,5 +21,6 @@ void lines2(){
     return;
   }
   ::dirAngle += 180;
+  motors(::dirAngle);
   delayMicroseconds(100000); // 100,000 = 0.1 segundos
 }

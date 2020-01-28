@@ -1,11 +1,13 @@
+#include "Type4067Mux.h"
+
+/* Mux */
+Type4067Mux mux(A4, INPUT, ANALOG, 11, 10, 9, 8);
 
 /* Function declaration */
 void lines();
-int mux();
 void linesPrint();
 void photoresistors();
 void commsToMega(bool, bool, bool, bool, bool);
-int mux(bool, bool, bool, bool);
 void distance();
 void interrupt();
 
@@ -58,6 +60,14 @@ void setup() {
   pinMode(COMPIN3, OUTPUT);
   pinMode(COMPIN4, OUTPUT);
   pinMode(COMPIN5, OUTPUT);
+
+  /* MUX */
+  pinMode(S0, OUTPUT);
+  pinMode(S1, OUTPUT);
+  pinMode(S2, OUTPUT);
+  pinMode(S3, OUTPUT);
+  pinMode(SIG, INPUT);
+
 }
 
 // the loop function runs over and over again forever

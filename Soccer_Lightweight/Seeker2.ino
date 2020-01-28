@@ -22,14 +22,20 @@ void seeker2(){
           if (pixy.ccc.numBlocks){
             if(pixy.ccc.blocks[0].m_width < 100){
               if(pixy.ccc.blocks[0].m_x < 0 + 80){
-                ::dirAngle = -45;
+                angleTurn(-45, 5);
               }
               if(pixy.ccc.blocks[0].m_x > 316 - 80){
-                ::dirAngle = 45;
+                angleTurn(45, 5); 
+              }
+              ::dirAngle = 0;
+              motors(::dirAngle);
+              do {
+                InfraredResult InfraredBall = InfraredSeeker::ReadAC();
+              }
+              while(InfraredBall.Direction == 5);
               }
             }
           }
-        }
       break;
     case 6: //Front Right
       ::dirAngle = 120;

@@ -10,6 +10,7 @@
 /* Function declaration */
 int error(float, float);
 void angleFix();
+void angleTurn(int, int);
 void motors(int);
 void turn(bool);
 int orientationStatus();
@@ -115,7 +116,14 @@ void setup() {
   BNOSetPoint = event.orientation.x;
 
   /* Interrupt Setup */
-  attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines, RISING); // change 2 to pin selected, RISING - Low ro high
+  attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines2, RISING); // change 2 to pin selected, RISING - Low ro high
+
+  /* Comm Setup*/
+  pinMode(NANOPIN1, INPUT);
+  pinMode(NANOPIN2, INPUT);
+  pinMode(NANOPIN3, INPUT);
+  pinMode(NANOPIN4, INPUT);
+  pinMode(NANOPIN5, INPUT);
 
   /* Pixy Setup */
   pixy.init();
@@ -132,6 +140,6 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-  seeker();
+  seeker2();
   angleFix();
 }

@@ -39,3 +39,25 @@ void angleFix(){
   } 
   Serial.println("BNO055 within tolerance");
 }
+
+void angleTurn(int dirTurn, int tolerance){
+  imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+  ::fix = error(euler.x(), dirTurn);
+  
+  if(abs(::fix) > tolerance){
+    while(abs(::fix) > tolerance){
+      if(::fix > 0){
+        turn(true);
+        Serial.println("Turn Right");
+      }
+      else{
+        turn(false);
+        Serial.println("Turn Left");
+      }
+      imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+      ::fix = error(euler.x(), dirTurn);
+    }
+    motorsOff();
+  } 
+  Serial.println("BNO055 within tolerance");
+}
