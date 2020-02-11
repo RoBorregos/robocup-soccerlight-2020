@@ -3,24 +3,25 @@ void lines2(){
   Serial.println("Linea detectada");
 
   linesCount++;
-  
-  int nano1 = digitalRead(NANOPIN1);
-  int nano2 = digitalRead(NANOPIN2);
-  int nano3 = digitalRead(NANOPIN3);
-  int nano4 = digitalRead(NANOPIN4);
-  int nano5 = digitalRead(NANOPIN5);
 
-  int whites[5] = {nano1, nano2, nano3, nano4, nano5};
-  /* [ Front, Right, Left, Back Right, Back Left ] */ 
-  /* Aerial View */
-  int sum_whites = 0;
-  for (int i: whites){
-    sum_whites += i;
+  
+  if(::dirAngle > 0){
+    ::dirAngle -= 180;
   }
-  if (sum_whites == 0){
-    return;
+  else{
+    ::dirAngle += 180;
   }
-  ::dirAngle += 180;
+
   motors(::dirAngle);
-  delayMicroseconds(100000); // 100,000 = 0.1 segundos
+
+  //turn(true);
+
+  bool nano;
+  
+  do{
+    nano = digitalRead(NANOPIN1); 
+  }
+  while(nano);
+  
+  delayMicroseconds(500000); // 100,000 ms = 0.1 s
 }

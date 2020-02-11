@@ -1,6 +1,6 @@
 void photoresistors(){
   /* Function to detect if photoresistors detect a white line */
-  int range = 900; // number at which a white line is detected
+  int range = 600; // number at which a white line is detected
 
   front = 0;
   right = 0;
@@ -26,6 +26,7 @@ void photoresistors(){
       break;
     }
   }
+  /*
   for (int i:pr_backright){
     if (i > range){
       backright = 1;
@@ -38,6 +39,7 @@ void photoresistors(){
       break;
     }
   }
+  */
   commsToMega(front, right, left, backright, backleft);
 }
 
@@ -46,6 +48,6 @@ void commsToMega(bool i, bool j, bool k, bool l, bool m){
   digitalWrite(COMPIN1, i);
   digitalWrite(COMPIN2, j);
   digitalWrite(COMPIN3, k);
-  digitalWrite(COMPIN4, l);
-  digitalWrite(COMPIN5, m);
+  // digitalWrite(COMPIN4, l);
+  // digitalWrite(COMPIN5, m);
 }

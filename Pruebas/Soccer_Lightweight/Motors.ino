@@ -3,9 +3,29 @@ void motors(int dir = 0){
   float m1 = cos(degToRad(150-dir));
   float m2 = cos(degToRad(30-dir));
   float m3 = cos(degToRad(270-dir));
+
+  Serial.println("TEST");
+  Serial.println(degToRad(150-dir));
+  
+  
   int speedA = m1*POWER;
   int speedB = m2*POWER;
   int speedC = m3*POWER;
+
+  Serial.print("m1 = ");
+  Serial.println(m1);
+  Serial.print("s1 = ");
+  Serial.println(speedA);
+  Serial.print("m2 = ");
+  Serial.println(m2);
+  Serial.print("s2 = ");
+  Serial.println(speedB);
+  Serial.print("m3 = ");
+  Serial.println(m3);
+  Serial.print("s3 = ");
+  Serial.println(speedC);
+  
+  delay(1000);
   
   if (m1 >= 0){
     analogWrite(MOTOR1A, speedA);

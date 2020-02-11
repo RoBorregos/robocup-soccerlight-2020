@@ -1,4 +1,3 @@
-#include <Pixy2.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <Adafruit_VL53L0X.h>
@@ -21,7 +20,7 @@ void lines2();
 bool bouncing();
 
 /* Pixy Object */
-Pixy2 pixy;
+// Pixy2 pixy;
 
 /* Function degrees to radians */
 float degToRad(int dir){
@@ -29,21 +28,22 @@ float degToRad(int dir){
 }
 
 /* LED Variables */
-const int LEDPIN = 13;
+// const int LEDPIN = 13;
 
-/* BNO055 Variables */
+/* BNO055 Variables 
 #define BNO055_SAMPLERATE_DELAY_MS (100)
 const int TOLERANCE = 10; // find lowest tolerance
 
-Adafruit_BNO055 bno = Adafruit_BNO055(-1, 0x28);
+// Adafruit_BNO055 bno = Adafruit_BNO055(-1, 0x28);
 
 int fix = 0;
 int BNOSetPoint = 0;
 unsigned long long angleFixTime = 0;
+*/
 
 /* VL53L0X Variables */
-Adafruit_VL53L0X lox = Adafruit_VL53L0X();
-const int RANGE = 35;
+// Adafruit_VL53L0X lox = Adafruit_VL53L0X();
+// const int RANGE = 35;
 
 /* Motors Variables */
 const int POWER = 255;
@@ -55,14 +55,16 @@ const int MOTOR2A = 6;
 const int MOTOR2B = 7;
 
 const int MOTOR3A = 4; 
-const int MOTOR3B = 5;
+const int MOTOR3B = 5; //el de atras
 
-volatile int dirAngle = 0;
+
+
+int dirAngle = 0;
 
 /* Photoresisters Variables */
 const int NANOPIN1 = 52;
-const int NANOPIN2 = 1;
-const int NANOPIN3 = 1;
+const int NANOPIN2 = 50;
+const int NANOPIN3 = 48;
 const int NANOPIN4 = 1;
 const int NANOPIN5 = 1;
 const int NANOPIN6 = 1;
@@ -70,7 +72,7 @@ const int NANOPIN6 = 1;
 /* Interrupt Variables */
 const int INTERRUPT = 20;
 volatile int linesCount = 0;
-unsigned long long timeTrack = 0;
+int timeTrack = 0;
 bool bounce = false;
 
 void setup() {
@@ -88,7 +90,20 @@ void setup() {
   bno.setExtCrystalUse(true);
 
   Serial.println("BNO055 detected");
+  */
+  
+  /* Motors Setup */
+  pinMode(MOTOR1A, OUTPUT);
+  pinMode(MOTOR1B, OUTPUT);
+  pinMode(MOTOR2A, OUTPUT);
+  pinMode(MOTOR2B, OUTPUT);
+  pinMode(MOTOR3A, OUTPUT);   
+  pinMode(MOTOR3B, OUTPUT);
 
+  /* Seeker Setup */
+  InfraredSeeker::Initialize();
+
+  
   /* BNO055 Calibration Check 
   Adafruit_BNO055 BNO055;
 
@@ -112,36 +127,10 @@ void setup() {
   sensors_event_t event;
   bno.getEvent(&event);
   BNOSetPoint = event.orientation.x;
-
-  
-  
-  /* Motors Setup */
-  pinMode(MOTOR1A, OUTPUT);
-  pinMode(MOTOR1B, OUTPUT);
-  pinMode(MOTOR2A, OUTPUT);
-  pinMode(MOTOR2B, OUTPUT);
-  pinMode(MOTOR3A, OUTPUT);   
-  pinMode(MOTOR3B, OUTPUT);
-
-  /* Seeker Setup 
-  InfraredSeeker::Initialize();
-
-  /* Pixy Setup 
-  pixy.init();
-
-  /* VL53L0X Setup 
-  Serial.println("VL53L0X Setup");
-  if (!lox.begin()) {
-    Serial.println(F("Failed to boot VL53L0X"));
-    while(1);
-  }
-  // power 
-  Serial.println("VL53L0X Working"); 
-
-  */
+  */ 
   
   /* Interrupt Setup */
-  attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines2, RISING); // change 2 to pin selected, RISING - Low to high, HIGH - High
+  // attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines2, RISING); // change pin selected, RISING - Low to high
 
   /* Comm Setup*/
   pinMode(NANOPIN1, INPUT);
@@ -150,19 +139,36 @@ void setup() {
   pinMode(NANOPIN4, INPUT);
   pinMode(NANOPIN5, INPUT);
 
+  /* Pixy Setup */
+  // pixy.init();
+
+  /* VL53L0X Setup
+  Serial.println("VL53L0X Setup");
+  if (!lox.begin()) {
+    Serial.println(F("Failed to boot VL53L0X"));
+    while(1);
+  }
+  // power 
+  Serial.println("VL53L0X Working"); 
+  */
 }
 
 // the loop function runs over and over again forever
 void loop() {  
-  ::dirAngle = 0;
-  motors(::dirAngle);
-  delay(3000);
-  turn(true);
-  delay(300);
+  motors(dirAngle);
+  
+  /* seeker2();*/
   /*
-  seeker2();
-  angleFix();
+  bool front = digitalRead(NANOPIN1);
+  bool right = digitalRead(NANOPIN2);
+  bool left = digitalRead(NANOPIN3);
+  if(right || left || front){
+    delay(1000);
+  }
+  */
+  /* angleFix();
   timeTrack = millis();
+  /*
   cli(); // disable interrupts
   bounce = bouncing();
   sei(); // enable interrupts

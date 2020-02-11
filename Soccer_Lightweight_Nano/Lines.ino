@@ -22,6 +22,7 @@ void lines(){
   pr_left[3] = mux.read(13);
   pr_left[4] = mux.read(14);
 
+  /*
   // whites[3]
   pr_backright[0] = analogRead(PR1);
   pr_backright[1] = analogRead(PR2);
@@ -30,6 +31,15 @@ void lines(){
   // whites[4]
   pr_backleft[0] = analogRead(PR3);
   pr_backleft[1] = analogRead(PR4);;
+  */
+}
+
+void interrupt(){
+  if(front || right || left) {
+    digitalWrite(INTRR, 1);
+    delay(50);
+    digitalWrite(INTRR, 0);
+  }
 }
 
 void linesPrint(){

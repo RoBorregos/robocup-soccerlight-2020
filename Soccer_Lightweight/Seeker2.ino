@@ -17,7 +17,7 @@ void seeker2(){
       ::dirAngle = 0;
       VL53L0X_RangingMeasurementData_t measure;
       lox.rangingTest(&measure, false);
-      if (measure.RangeStatus != 4 && measure.RangeMilliMeter <= RANGE) { // giro para agarrala derecho
+      if (measure.RangeStatus != 4 && measure.RangeMilliMeter <= RANGE) { // 45 degree turn to aproach ball in corners
           pixy.ccc.getBlocks();
           if (pixy.ccc.numBlocks){
             if(pixy.ccc.blocks[0].m_width < 100){
@@ -31,8 +31,10 @@ void seeker2(){
               motors(::dirAngle);
               do {
                 InfraredResult InfraredBall = InfraredSeeker::ReadAC();
+                VL53L0X_RangingMeasurementData_t measure;
+                lox.rangingTest(&measure, false);
               }
-              while(InfraredBall.Direction == 5);
+              while(InfraredBall.Direction == 5 && measure.RangeStatus != 4 && measure.RangeMilliMeter <= RANGE);
               }
             }
           }
