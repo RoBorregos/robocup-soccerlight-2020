@@ -14,8 +14,6 @@ void lines2(){
 
   motors(::dirAngle);
 
-  //turn(true);
-
   bool nano;
   
   do{

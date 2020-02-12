@@ -68,7 +68,7 @@ const int NANOPIN5 = 1;
 const int NANOPIN6 = 1;
 
 /* Interrupt Variables */
-const int INTERRUPT = 20;
+const int INTERRUPT = 2;
 volatile int linesCount = 0;
 unsigned long long timeTrack = 0;
 bool bounce = false;
@@ -123,7 +123,7 @@ void setup() {
   pinMode(MOTOR3A, OUTPUT);   
   pinMode(MOTOR3B, OUTPUT);
 
-  /* Seeker Setup 
+  /* Seeker Setup */
   InfraredSeeker::Initialize();
 
   /* Pixy Setup 
@@ -154,11 +154,15 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {  
+  /*
   ::dirAngle = 0;
   motors(::dirAngle);
   delay(3000);
   turn(true);
   delay(300);
+  */
+  seeker();
+  
   /*
   seeker2();
   angleFix();
@@ -170,4 +174,5 @@ void loop() {
     delay(300);
   }
   */
+  
 }

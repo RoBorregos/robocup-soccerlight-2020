@@ -10,18 +10,19 @@ bool photoresistors2(){
 }
 
 void interrupt2(){
-  i = photoresistors2();
+  bool i = photoresistors2();
   
   digitalWrite(INTRR, i);
   digitalWrite(COMPIN1, i);
 
+  // Artificial delay for mega
   if(i){
     digitalWrite(COMPIN1, i);
     delay(600);
   }
 
   // Attempt at a better implementation of a delay
-  /* 
+  /*
   if(i){
     timeTrack = millis();
     bool j;
@@ -33,7 +34,7 @@ void interrupt2(){
       }
       if(j && photoresistors2(){
         digitalWrite(INTRR, false);
-        delay(50);
+        delay(15);
         digitalWrite(INTRR, true);
         j = false;
       }
