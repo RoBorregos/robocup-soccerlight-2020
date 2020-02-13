@@ -7,7 +7,7 @@
 #include <Wire.h>
 #include <HTInfraredSeeker.h>
 
-/* Function declaration */
+/* Function declarations */
 int error(float, float);
 void angleFix();
 void angleTurn(int, int);
@@ -33,33 +33,32 @@ const int LEDPIN = 13;
 
 /* BNO055 Variables */
 #define BNO055_SAMPLERATE_DELAY_MS (100)
-const int TOLERANCE = 10; // find lowest tolerance
-
-Adafruit_BNO055 bno = Adafruit_BNO055(-1, 0x28);
-
+const int TOLERANCE = 20; // find lowest tolerance
 int fix = 0;
 int BNOSetPoint = 0;
 unsigned long long angleFixTime = 0;
 
-/* VL53L0X Variables */
+/* BNO055 Object */
+Adafruit_BNO055 bno = Adafruit_BNO055(-1, 0x28);
+
+/* VL53L0X Object */
 Adafruit_VL53L0X lox = Adafruit_VL53L0X();
+
+/* VL53L0X Variable */
 const int RANGE = 35;
 
 /* Motors Variables */
-const int POWER = 255;
+const int POWER = 255;      // max power for motors
+volatile int dirAngle = 0;  // direction angle for motors
 
 const int MOTOR1A = 8; 
 const int MOTOR1B = 9;
-
 const int MOTOR2A = 6; 
 const int MOTOR2B = 7;
-
 const int MOTOR3A = 4; 
 const int MOTOR3B = 5;
 
-volatile int dirAngle = 0;
-
-/* Photoresisters Variables */
+/* Photoresistors Variables */
 const int NANOPIN1 = 52;
 const int NANOPIN2 = 1;
 const int NANOPIN3 = 1;
@@ -78,7 +77,7 @@ void setup() {
   Serial.begin(9600);
   Serial.println("Setup");
   
-  /* BNO055 Setup 
+  /* BNO055 Setup */
   while(!bno.begin())
   {
     Serial.println("No BNO055 detected ...");
@@ -89,30 +88,23 @@ void setup() {
 
   Serial.println("BNO055 detected");
 
-  /* BNO055 Calibration Check 
+  /* BNO055 Calibration Check */
   Adafruit_BNO055 BNO055;
 
-  while(orientationStatus() != 3)
+  while(orientationStatus() < 1)
   {
     digitalWrite(LEDPIN, HIGH);
-    delay(1000);
-    digitalWrite(LEDPIN, LOW);
-    delay(500);
+    delay(50);
   }
+  digitalWrite(LEDPIN, LOW);
+  
   Serial.println("Calibrated");
 
-  for(int i = 0; i < 15; i++)
-  {
-    digitalWrite(LEDPIN, HIGH);
-    delay(100);
-    digitalWrite(LEDPIN, LOW);
-    delay(100);
-  }
-  delay(1000);
+  delay(10);
+
   sensors_event_t event;
   bno.getEvent(&event);
-  BNOSetPoint = event.orientation.x;
-
+  // BNOSetPoint = event.orientation.x;
   
   
   /* Motors Setup */
@@ -141,7 +133,7 @@ void setup() {
   */
   
   /* Interrupt Setup */
-  attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines2, RISING); // change 2 to pin selected, RISING - Low to high, HIGH - High
+  // attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines2, RISING); // change 2 to pin selected, RISING - Low to high, HIGH - High
 
   /* Comm Setup*/
   pinMode(NANOPIN1, INPUT);
@@ -154,14 +146,8 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {  
-  /*
-  ::dirAngle = 0;
-  motors(::dirAngle);
-  delay(3000);
-  turn(true);
-  delay(300);
-  */
-  seeker();
+  // seeker();
+  angleFix();
   
   /*
   seeker2();

@@ -9,8 +9,17 @@ bool photoresistors2(){
    }
 }
 
+bool photoresistors3(){
+  for(int i = 0; i < 15; i++){
+    if(mux.read(i) > 870){
+       return true;
+    }
+  }
+  return false;
+}
+
 void interrupt2(){
-  bool i = photoresistors2();
+  bool i = photoresistors3();
   
   digitalWrite(INTRR, i);
   digitalWrite(COMPIN1, i);

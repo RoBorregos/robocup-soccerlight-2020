@@ -4,7 +4,7 @@ void lines2(){
 
   linesCount++;
 
-  
+  // change direction of robot by 180
   if(::dirAngle > 0){
     ::dirAngle -= 180;
   }
@@ -15,7 +15,8 @@ void lines2(){
   motors(::dirAngle);
 
   bool nano;
-  
+
+  // delay given by digitalRead
   do{
     nano = digitalRead(NANOPIN1); 
   }
