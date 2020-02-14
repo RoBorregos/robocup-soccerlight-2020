@@ -25,11 +25,11 @@ void angleFix(){
   if(abs(::fix) > TOLERANCE){
     while(abs(::fix) > TOLERANCE){
       if(::fix > 0){
-        turn(false);
+        turn(false, 255);
         Serial.println("Turn Right");
       }
       else{
-        turn(true);
+        turn(true, 255);
         Serial.println("Turn Left");
       }
       imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
@@ -50,11 +50,11 @@ void angleTurn(int dirTurn, int tolerance){
   if(abs(::fix) > tolerance){
     while(abs(::fix) > tolerance){
       if(::fix > 0){
-        turn(false);
+        turn(false, 255);
         Serial.println("Turn Right");
       }
       else{
-        turn(true);
+        turn(true, 255);
         Serial.println("Turn Left");
       }
       imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);

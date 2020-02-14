@@ -12,12 +12,10 @@ int error(float, float);
 void angleFix();
 void angleTurn(int, int);
 void motors(int);
-void turn(bool);
+void turn(bool, int);
 int orientationStatus();
 void seeker();
-void seeker2();
 void lines();
-void lines2();
 bool bouncing();
 
 /* Pixy Object */
@@ -48,7 +46,6 @@ Adafruit_VL53L0X lox = Adafruit_VL53L0X();
 const int RANGE = 35;
 
 /* Motors Variables */
-const int POWER = 255;      // max power for motors
 volatile int dirAngle = 0;  // direction angle for motors
 
 const int MOTOR1A = 8; 
@@ -60,11 +57,6 @@ const int MOTOR3B = 5;
 
 /* Photoresistors Variables */
 const int NANOPIN1 = 52;
-const int NANOPIN2 = 1;
-const int NANOPIN3 = 1;
-const int NANOPIN4 = 1;
-const int NANOPIN5 = 1;
-const int NANOPIN6 = 1;
 
 /* Interrupt Variables */
 const int INTERRUPT = 2;
@@ -104,8 +96,7 @@ void setup() {
 
   sensors_event_t event;
   bno.getEvent(&event);
-  // BNOSetPoint = event.orientation.x;
-  
+  BNOSetPoint = event.orientation.x;
   
   /* Motors Setup */
   pinMode(MOTOR1A, OUTPUT);
@@ -118,39 +109,28 @@ void setup() {
   /* Seeker Setup */
   InfraredSeeker::Initialize();
 
-  /* Pixy Setup 
+  /* Pixy Setup */
   pixy.init();
 
-  /* VL53L0X Setup 
+  /* VL53L0X Setup */
   Serial.println("VL53L0X Setup");
   if (!lox.begin()) {
     Serial.println(F("Failed to boot VL53L0X"));
     while(1);
   }
-  // power 
   Serial.println("VL53L0X Working"); 
-
-  */
   
   /* Interrupt Setup */
-  // attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines2, RISING); // change 2 to pin selected, RISING - Low to high, HIGH - High
+  attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines, RISING); // change 2 to pin selected, RISING - Low to high, HIGH - High
 
   /* Comm Setup*/
   pinMode(NANOPIN1, INPUT);
-  pinMode(NANOPIN2, INPUT);
-  pinMode(NANOPIN3, INPUT);
-  pinMode(NANOPIN4, INPUT);
-  pinMode(NANOPIN5, INPUT);
 
 }
 
 // the loop function runs over and over again forever
 void loop() {  
-  // seeker();
-  angleFix();
-  
-  /*
-  seeker2();
+  seeker();
   angleFix();
   timeTrack = millis();
   cli(); // disable interrupts
@@ -159,6 +139,4 @@ void loop() {
   if (bounce){
     delay(300);
   }
-  */
-  
 }

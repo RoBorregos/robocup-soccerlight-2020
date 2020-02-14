@@ -1,4 +1,5 @@
 void motors(int dir = 0){
+  int POWER = 255; // total motor speed
   // set motors to move in direction dir degrees
   float m1 = cos(degToRad(150-dir));
   float m2 = cos(degToRad(30-dir));
@@ -33,23 +34,23 @@ void motors(int dir = 0){
   }
 }
 
-void turn(bool dir){
+void turn(bool dir, int power = 255){
   /*  true turns right
       false turns left */
   if (dir) {
     analogWrite(MOTOR1A, 0);
-    analogWrite(MOTOR1B, POWER);
+    analogWrite(MOTOR1B, power);
     analogWrite(MOTOR2A, 0);
-    analogWrite(MOTOR2B, POWER);
+    analogWrite(MOTOR2B, power);
     analogWrite(MOTOR3A, 0);
-    analogWrite(MOTOR3B, POWER);
+    analogWrite(MOTOR3B, power);
   }
   if (!dir) {
-    analogWrite(MOTOR1A, POWER);
+    analogWrite(MOTOR1A, power);
     analogWrite(MOTOR1B, 0);
-    analogWrite(MOTOR2A, POWER);
+    analogWrite(MOTOR2A, power);
     analogWrite(MOTOR2B, 0);
-    analogWrite(MOTOR3A, POWER);
+    analogWrite(MOTOR3A, power);
     analogWrite(MOTOR3B, 0);
   }
 }

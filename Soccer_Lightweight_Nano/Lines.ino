@@ -1,86 +1,44 @@
 void lines(){
-  /* Function to update values of pr arrays*/
+  pr[0] = mux.read(0);
+  pr[1] = mux.read(1);
+  pr[2] = mux.read(2);
+  pr[3] = mux.read(3);
+  pr[4] = mux.read(4);;
 
-  // whites[0]
-  pr_front[0] = mux.read(0);
-  pr_front[1] = mux.read(1);
-  pr_front[2] = mux.read(2);
-  pr_front[3] = mux.read(3);
-  pr_front[4] = mux.read(4);;
+  pr[5] = mux.read(5);
+  pr[6] = mux.read(6);
+  pr[7] = mux.read(7);
+  pr[8] = mux.read(8);
+  pr[9] = mux.read(9);
 
-  // whites[1]
-  pr_right[0] = mux.read(5);
-  pr_right[1] = mux.read(6);
-  pr_right[2] = mux.read(7);
-  pr_right[3] = mux.read(8);
-  pr_right[4] = mux.read(9);
-
-  // whites[2]
-  pr_left[0] = mux.read(10);
-  pr_left[1] = mux.read(11);
-  pr_left[2] = mux.read(12);
-  pr_left[3] = mux.read(13);
-  pr_left[4] = mux.read(14);
-
-  /*
-  // whites[3]
-  pr_backright[0] = analogRead(PR1);
-  pr_backright[1] = analogRead(PR2);
-
-
-  // whites[4]
-  pr_backleft[0] = analogRead(PR3);
-  pr_backleft[1] = analogRead(PR4);;
-  */
-}
-
-void interrupt(){
-  if(front || right || left) {
-    digitalWrite(INTRR, 1);
-    delay(50);
-    digitalWrite(INTRR, 0);
-  }
+  pr[10] = mux.read(10);
+  pr[11] = mux.read(11);
+  pr[12] = mux.read(12);
+  pr[13] = mux.read(13);
+  pr[14] = mux.read(14);
 }
 
 void linesPrint(){
-  Serial.print("Front = ");
-  Serial.println(front);
-  for (int i:pr_front){
-    Serial.print(i);
-    Serial.print("  ");
-    }
-  Serial.println();
-
-  Serial.print("Right = ");
-  Serial.println(right);
-  for (int i:pr_right){
-    Serial.print(i);
-    Serial.print("  ");
-    }
-  Serial.println();
-
-  Serial.print("Left = ");
-  Serial.println(left);
-  for (int i:pr_left){
-    Serial.print(i);
-    Serial.print("  ");
-    }
-  Serial.println();
-
-  Serial.print("Back Right = ");
-  Serial.println(backright);
-  for (int i:pr_backright){
-    Serial.print(i);
-    Serial.print("  ");
-    }
-  Serial.println();
-
-  Serial.print("Back Left = ");
-  Serial.println(backleft);
-  for (int i:pr_backleft){
-    Serial.print(i);
-    Serial.print("  ");
-    }
-  Serial.println();
+  for (int i = 0; i < 15; i++){
+      if (i==0){
+        Serial.print(" ");
+        Serial.println("Left");
+      }
+      if (i==5){
+        Serial.print(" ");
+        Serial.print("Right");
+      }
+      if (i==10){
+        Serial.print(" ");
+        Serial.println("Front");
+      }
+      Serial.print("  ");
+      Serial.print(pr[i]);
   
+      if (i == 4 || i == 9 || i == 14){
+        Serial.print("         " );
+        Serial.println();
+      }  
+  }
+
 }
