@@ -17,9 +17,16 @@ int orientationStatus();
 void seeker();
 void lines();
 bool bouncing();
+void center();
+void PixyUpdate();
 
 /* Pixy Object */
 Pixy2 pixy;
+int Ppos = 0;
+int Ptol = 50;
+
+/* Pixy Color Code */
+const int SIG = 1; // 1 = Azul, 2 = Amarillo 
 
 /* Function degrees to radians */
 float degToRad(int dir){
@@ -109,22 +116,24 @@ void setup() {
   /* Seeker Setup */
   InfraredSeeker::Initialize();
 
+  
   /* Pixy Setup */
   pixy.init();
 
   /* VL53L0X Setup */
   Serial.println("VL53L0X Setup");
-  if (!lox.begin()) {
+  if(!lox.begin()) {
     Serial.println(F("Failed to boot VL53L0X"));
     while(1);
   }
   Serial.println("VL53L0X Working"); 
   
-  /* Interrupt Setup */
-  attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines, RISING); // change 2 to pin selected, RISING - Low to high, HIGH - High
 
   /* Comm Setup*/
   pinMode(NANOPIN1, INPUT);
+
+  /* Interrupt Setup */
+  attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines, RISING); // change 2 to pin selected, RISING - Low to high, HIGH - High
 
 }
 
@@ -136,7 +145,7 @@ void loop() {
   cli(); // disable interrupts
   bounce = bouncing();
   sei(); // enable interrupts
-  if (bounce){
+  if(bounce){
     delay(300);
   }
 }

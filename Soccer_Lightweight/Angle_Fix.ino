@@ -4,10 +4,10 @@ int error(float actual, float final = 0){
       angulo positivo si es a la derecha
       angulo negativo si es a la izquierda */
   int total = final-actual;
-  if (total > 180){
+  if(total > 180){
     total = -(360-total);
   }
-  else if (total < -180){
+  else if(total < -180){
     total = 360 + total;
   }
   return total;
@@ -15,7 +15,7 @@ int error(float actual, float final = 0){
 
 void angleFix(){
   /* Set angle back to 0 */
-  if(millis() < angleFixTime + 15){
+  if(millis() < angleFixTime + 50){
     return;
   }
   imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);

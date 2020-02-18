@@ -8,7 +8,7 @@ void motors(int dir = 0){
   int speedB = m2*POWER;
   int speedC = m3*POWER;
   
-  if (m1 >= 0){
+  if(m1 >= 0){
     analogWrite(MOTOR1A, speedA);
     analogWrite(MOTOR1B, 0);
   }
@@ -16,7 +16,7 @@ void motors(int dir = 0){
     analogWrite(MOTOR1A, 0);
     analogWrite(MOTOR1B, abs(speedA));
   }
-  if (m2 >= 0){
+  if(m2 >= 0){
     analogWrite(MOTOR2A, speedB);
     analogWrite(MOTOR2B, 0);
   }
@@ -24,7 +24,7 @@ void motors(int dir = 0){
     analogWrite(MOTOR2A, 0);
     analogWrite(MOTOR2B, abs(speedB));
   }
-  if (m3 >= 0){
+  if(m3 >= 0){
     analogWrite(MOTOR3A, speedC);
     analogWrite(MOTOR3B, 0);
   }
@@ -35,9 +35,9 @@ void motors(int dir = 0){
 }
 
 void turn(bool dir, int power = 255){
-  /*  true turns right
-      false turns left */
-  if (dir) {
+  /*  false turns right
+      true turns left */
+  if(dir) {
     analogWrite(MOTOR1A, 0);
     analogWrite(MOTOR1B, power);
     analogWrite(MOTOR2A, 0);
@@ -45,7 +45,7 @@ void turn(bool dir, int power = 255){
     analogWrite(MOTOR3A, 0);
     analogWrite(MOTOR3B, power);
   }
-  if (!dir) {
+  if(!dir) {
     analogWrite(MOTOR1A, power);
     analogWrite(MOTOR1B, 0);
     analogWrite(MOTOR2A, power);

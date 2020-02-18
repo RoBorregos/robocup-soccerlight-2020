@@ -1,11 +1,19 @@
-
 bool photoresistors(){
   for(int i = 0; i < 15; i++){
-    if(mux.read(i) > 870){
+    if(mux.read(i) > RANGO){
        return true;
     }
   }
-  return false;
+
+  /*
+  for (int i = 0; i < 4; i++) {
+    if(analogRead(PR[i]) > RANGO){
+      return true;
+    }
+  }
+  */
+    
+ return false;
 }
 
 void interrupt(){
@@ -41,5 +49,5 @@ void interrupt(){
   }
   */
   
-  Serial.println(i);
+  // Serial.println(i);
 }
