@@ -1,24 +1,39 @@
-#include <Pixy2.h>
-#include <Adafruit_Sensor.h>
+/* 
+ * Soccer Lightweight Junior 2020
+ * Created by RoBorregos member Keven G. Arroyo
+ */
+
 #include <Adafruit_BNO055.h>
+#include <Adafruit_Sensor.h>
 #include <Adafruit_VL53L0X.h>
-#include <utility/imumaths.h>
-#include <math.h>
-#include <Wire.h>
 #include <HTInfraredSeeker.h>
+#include <math.h>
+#include <Pixy2.h>
+#include <SoftwareSerial.h>
+#include <utility/imumaths.h>
+#include <Wire.h>
+
+/* Bluetooth Object */
+SoftwareSerial Blue(10, 11); // RX, TX
 
 /* Function declarations */
+bool bluetooth();
+bool bouncing();
 int error(float, float);
+int orientationStatus();
 void angleFix();
 void angleTurn(int, int);
-void motors(int);
-void turn(bool, int);
-int orientationStatus();
-void seeker();
-void lines();
-bool bouncing();
 void center();
+void defense();
+void lines();
+void motors(int);
 void PixyUpdate();
+void seeker();
+void turn(bool, int);
+
+/* Bluetooth Declaration */
+const bool RAND = true; // change depending of robot
+unsigned long long CurrentTime = 0;
 
 /* Pixy Object */
 Pixy2 pixy;
@@ -26,7 +41,7 @@ int Ppos = 0;
 int Ptol = 50;
 
 /* Pixy Color Code */
-const int SIG = 1; // 1 = Azul, 2 = Amarillo 
+const int SIG = 2; // 1 = Blue, 2 = Yellow 
 
 /* Function degrees to radians */
 float degToRad(int dir){
@@ -75,6 +90,9 @@ void setup() {
   /* Initialize serial communication */
   Serial.begin(9600);
   Serial.println("Setup");
+
+  /* Initialize bluetooth communication */
+  Blue.begin(9600);
   
   /* BNO055 Setup */
   while(!bno.begin())
@@ -88,8 +106,6 @@ void setup() {
   Serial.println("BNO055 detected");
 
   /* BNO055 Calibration Check */
-  Adafruit_BNO055 BNO055;
-
   while(orientationStatus() < 1)
   {
     digitalWrite(LEDPIN, HIGH);
@@ -116,7 +132,6 @@ void setup() {
   /* Seeker Setup */
   InfraredSeeker::Initialize();
 
-  
   /* Pixy Setup */
   pixy.init();
 
@@ -128,17 +143,26 @@ void setup() {
   }
   Serial.println("VL53L0X Working"); 
   
-
   /* Comm Setup*/
   pinMode(NANOPIN1, INPUT);
 
   /* Interrupt Setup */
   attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines, RISING); // change 2 to pin selected, RISING - Low to high, HIGH - High
-
+  CurrentTime = millis(); 
 }
 
 // the loop function runs over and over again forever
-void loop() {  
+void loop() {   
+  if(millis() > CurrentTime + 1500){ // one robot every 1500, another one every 1600
+    // check if robot should be defense or offense
+    CurrentTime = millis();
+    if(bluetooth()){
+      seeker();
+    }
+    else{
+      defense();
+    }
+  }
   seeker();
   angleFix();
   timeTrack = millis();

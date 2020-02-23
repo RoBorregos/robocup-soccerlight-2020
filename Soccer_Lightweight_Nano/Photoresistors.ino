@@ -25,7 +25,7 @@ void interrupt(){
   // Artificial delay for mega
   if(i){
     digitalWrite(COMPIN1, i);
-    delay(600);
+    delay(400);
   }
 
   // Attempt at a better implementation of a delay

@@ -18,7 +18,7 @@ const int COMPIN1 = 6;
 /* Interrupt Pin */
 const int INTRR = 12;
 
-unsigned long long timeTrack = 0;
+// unsigned long long timeTrack = 0;
 
 void setup() {
   /* Initialize serial communication */

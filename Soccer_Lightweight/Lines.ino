@@ -5,13 +5,15 @@ void lines(){
   linesCount++;
 
   // change direction of robot by 180
+  // ::dirAngle = (::dirAngle >= 0) ? ::dirAngle -= 180 : ::dirAngle += 180;
+  
   if(::dirAngle > 0){
     ::dirAngle -= 180;
   }
   else{
     ::dirAngle += 180;
   }
-
+  
   motors(::dirAngle);
 
   bool nano;
