@@ -22,13 +22,13 @@ void interrupt(){
   digitalWrite(INTRR, i);
   digitalWrite(COMPIN1, i);
 
-  // Artificial delay for mega
+  // Artificial delay for Mega.
   if(i){
     digitalWrite(COMPIN1, i);
     delay(400);
   }
 
-  // Attempt at a better implementation of a delay
+  // Attempt at a better implementation of a delay.
   /*
   if(i){
     timeTrack = millis();
