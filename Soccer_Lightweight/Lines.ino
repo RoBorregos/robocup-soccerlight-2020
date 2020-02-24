@@ -1,10 +1,10 @@
 void lines(){
-  /* Read data from arduino nano and act accordingly */
+  // Read data from arduino nano & reverse motors.
   Serial.println("Linea detectada");
 
   linesCount++;
 
-  // change direction of robot by 180
+  // Change direction of motors by 180.
   // ::dirAngle = (::dirAngle >= 0) ? ::dirAngle -= 180 : ::dirAngle += 180;
   
   if(::dirAngle > 0){
@@ -18,7 +18,7 @@ void lines(){
 
   bool nano;
 
-  // delay given by digitalRead
+  // Delay given by digitalRead.
   do{
     nano = digitalRead(NANOPIN1); 
   }

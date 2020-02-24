@@ -1,7 +1,7 @@
 int orientationStatus(){
   imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
 
-  /* Display the floating point data */
+  // Display the floating point data.
   Serial.print("X: ");
   Serial.print(euler.x());
   Serial.print(" Y: ");
@@ -10,7 +10,7 @@ int orientationStatus(){
   Serial.print(euler.z());
   Serial.print("\t\t");
 
-  /* Display calibration status for each sensor. */
+  // Display calibration status for each sensor.
   uint8_t system, gyro, accel, mag = 0;
   bno.getCalibration(&system, &gyro, &accel, &mag);
   Serial.print("CALIBRATION: Sys=");

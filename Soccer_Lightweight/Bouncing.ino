@@ -1,5 +1,5 @@
 bool bouncing(){
-  /* Fix incongrunce between sensor */
+  // Function fixes incongrunces between sensors.
   bool sidesMotors = false;
   bool sidesSeeker = false;
   bool reset = false;

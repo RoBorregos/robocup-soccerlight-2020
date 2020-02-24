@@ -1,9 +1,7 @@
 bool bluetooth(){
-  /*
-   * Receive and send a byte through bluetooth
-   * False if ball is not in range
-   * True if ball is in range
-   */
+  // Receive and send a byte through bluetooth.
+  // Return false if ball is not in range.
+  // Return true if ball is in range.
   byte sending;
   byte receiving;
   VL53L0X_RangingMeasurementData_t measure;

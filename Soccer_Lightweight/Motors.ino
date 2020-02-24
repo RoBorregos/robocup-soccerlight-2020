@@ -1,6 +1,6 @@
 void motors(int dir){
-  int POWER = 255; // total motor speed
-  // set motors to move in direction dir degrees
+  int POWER = 255; // Total motor speed.
+  // Set motors to move in direction dir degrees.
   int speed1 = cos(degToRad(150-dir))*POWER;
   int speed2 = cos(degToRad(30-dir))*POWER;
   int speed3 = cos(degToRad(270-dir))*POWER;
@@ -32,8 +32,8 @@ void motors(int dir){
 }
 
 void turn(bool dir, int power){
-  /*  false turns right
-      true turns left */
+  // False turns right.
+  // True turns left.
   if(dir) {
     analogWrite(MOTOR1A, 0);
     analogWrite(MOTOR1B, power);
@@ -53,7 +53,7 @@ void turn(bool dir, int power){
 }
 
 void motorsOff(){
-  // turn Off all motors
+  // Turns Off all motors
   analogWrite(MOTOR1A, 0);
   analogWrite(MOTOR1B, 0);
   analogWrite(MOTOR2A, 0);

@@ -1,8 +1,8 @@
 int error(float actual, float final = 0){ 
-  /*  actual y final siendo angulos de 0 al 360
-      regresa un angulo
-      angulo positivo si es a la derecha
-      angulo negativo si es a la izquierda */
+  // Actual and final are angles in degrees.
+  // Function returns an angle in degrees.
+  // Positive angle signals right.
+  // Negative angle signals left.
   int total = final-actual;
   if(total > 180){
     total = -(360-total);
@@ -14,7 +14,7 @@ int error(float actual, float final = 0){
 }
 
 void angleFix(){
-  /* Set angle back to 0 */
+  // Sets angle back to 0.
   if(millis() < angleFixTime + 50){
     return;
   }
@@ -43,7 +43,7 @@ void angleFix(){
 }
 
 void angleTurn(int dirTurn, int tolerance){
-  /* Set angle to dirTurn */
+  // Function sets angle to dirTurn.
   imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
   ::fix = error(euler.x(), dirTurn);
   
