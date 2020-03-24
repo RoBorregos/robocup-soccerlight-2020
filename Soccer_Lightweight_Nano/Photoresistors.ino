@@ -1,20 +1,23 @@
 bool photoresistors(){
-  for(int i = 0; i < 15; i++){
+  for(int i = 0; i < 15; i++){  
+    /*  
+    // Ignore faulty line detectors.
+    if(i == 5 || i == 7 || i == 13){
+      continue;
+    }
+    */
     if(mux.read(i) > RANGO){
        return true;
     }
   }
-
-  /*
   for (int i = 0; i < 4; i++) {
     if(analogRead(PR[i]) > RANGO){
       return true;
     }
   }
-  */
-    
  return false;
 }
+
 
 void interrupt(){
   bool i = photoresistors();
@@ -25,7 +28,7 @@ void interrupt(){
   // Artificial delay for Mega.
   if(i){
     digitalWrite(COMPIN1, i);
-    delay(400);
+    delay(350);
   }
 
   // Attempt at a better implementation of a delay.
@@ -48,6 +51,4 @@ void interrupt(){
     }
   }
   */
-  
-  // Serial.println(i);
 }

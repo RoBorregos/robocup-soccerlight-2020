@@ -1,0 +1,84 @@
+Soccer_Lightweight
+
+// Position bool for bluetooth
+// bool play = true;
+
+// Function declarations.
+// bool bluetooth();
+
+// Bluetooth Declaration.
+// const bool RAND = true; // Change depending of robot.
+// unsigned long long CurrentTime = 0;
+	
+void setup(){
+  // Initialize bluetooth communication.
+  // Serial1.begin(9600);
+  // CurrentTime = millis(); 
+}
+
+Bluetooth
+
+/*
+bool bluetooth(){
+  // Receive and send a byte through bluetooth.
+  // Return false if ball is not in range.
+  // Return true if ball is in range.
+
+  // Consider IR strength & IR Direction
+  
+  bool sending;
+  bool receiving;
+  VL53L0X_RangingMeasurementData_t measure;
+  lox.rangingTest(&measure, false);
+  InfraredResult InfraredBall = InfraredSeeker::ReadAC();
+  if(measure.RangeStatus != 4 && measure.RangeMilliMeter <= RANGE && InfraredBall.Direction == 5) {
+    sending = true; // true
+    if(Serial1.available()){
+      Serial1.write(sending);
+    }
+  }
+  else{
+    sending = false; // false
+    if(Serial1.available()){
+      Serial1.write(sending);
+    }
+  }
+  
+  if(Serial1.available()){   // recibir datos por blue
+    receiving = Blue.read();
+  }
+  else{
+    receiving = false; // si no se puede recibir interpretar falso
+  }
+  
+  if(!sending && !receiving){ // se mando falso y se recibio falso
+    return RAND;
+  }
+  if(!sending && receiving){ // se mando falso y se recibio verdadero
+    return false;
+  }
+  if(sending && !receiving){ // se mando verdadero y se recibio falso
+    return true;
+  }
+  if(sending && receiving){ // se mando verdadero y se recibio verdadero
+    return true;
+  }
+  return true;
+}
+*/
+
+/*  Insert in void loop for bluetooth use.
+ if(millis() > CurrentTime + 1500){ 
+    // One robot every 1500, another one every 1600.
+    // Check if robot should be defense or offense.
+    CurrentTime = millis();
+    play = bluetooth();
+  }
+
+  if(play){
+    seeker();
+  }
+  else{
+    defense();
+  }
+ */

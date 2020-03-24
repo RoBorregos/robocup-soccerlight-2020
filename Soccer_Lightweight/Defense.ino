@@ -40,7 +40,7 @@ void defense(){
       Serial.println("180");
       break;
   } 
-  if(InfraredBall.Direction == 0){
+  if(InfraredBall.Direction == 0){ // Fix this.
     motorsOff();
     Serial.println("Off");
   }

@@ -5,14 +5,14 @@ float degToRad(int dir){
   return (dir * M_PI / 180);
 }
 
-const int motor1A = A6; 
-const int motor1B = A5;
+const int motor1A = 4; 
+const int motor1B = 3;
 
-const int motor2A = A3; 
-const int motor2B = A2;
+const int motor2A = 8; 
+const int motor2B = 7;
 
-const int motor3A = A10; 
-const int motor3B = A9;
+const int motor3A = 6; 
+const int motor3B = 5;
 int power = 255;
 
 void motors(int dir){
@@ -134,6 +134,7 @@ void setup() {
   pinMode(motor3A, OUTPUT);   
   pinMode(motor3B, OUTPUT);
 
+  
   // Set up Serial
   Serial.begin(9600);
 
@@ -141,5 +142,5 @@ void setup() {
 }
 
 void loop() {
-   motors(0);
+  turn(true); 
 }

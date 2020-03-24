@@ -1,4 +1,4 @@
-int error(float actual, float final = 0){ 
+int error(float actual, float final = BNO_START){ 
   // Actual and final are angles in degrees.
   // Function returns an angle in degrees.
   // Positive angle signals right.
@@ -13,26 +13,28 @@ int error(float actual, float final = 0){
   return total;
 }
 
+
 void angleFix(){
   // Sets angle back to 0.
-  if(millis() < angleFixTime + 50){
+  if(millis() < angleFixTime + 150){
     return;
   }
   imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
   angleFixTime = millis();
   ::fix = error(euler.x());
-  
   if(abs(::fix) > TOLERANCE){
     while(abs(::fix) > TOLERANCE){
       if(::fix > 0){
-        turn(false, 255);
+        turn(true, (75+100*abs(::fix)/180));
         Serial.println("Turn Right");
+        Serial.println(euler.x());
       }
       else{
-        turn(true, 255);
+        turn(false, (75+100*abs(::fix)/180));
         Serial.println("Turn Left");
+        Serial.println(euler.x());
       }
-      imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+      euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
       ::fix = error(euler.x());
       motorsOff();
     }
@@ -42,27 +44,27 @@ void angleFix(){
   Serial.println(euler.x());
 }
 
+
 void angleTurn(int dirTurn, int tolerance){
   // Function sets angle to dirTurn.
   imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
   ::fix = error(euler.x(), dirTurn);
-  
   if(abs(::fix) > tolerance){
     while(abs(::fix) > tolerance){
       if(::fix > 0){
-        turn(false, 255);
-        Serial.println("Turn Right");
+        turn(true, (75+100*abs(::fix)/180));
+        Serial.println("AT Turn Right");
       }
       else{
-        turn(true, 255);
-        Serial.println("Turn Left");
+        turn(false, (75+100*abs(::fix)/180));
+        Serial.println("AT Turn Left");
       }
-      imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+      euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
       ::fix = error(euler.x(), dirTurn);
       motorsOff();
     }
     motorsOff();
   } 
-  Serial.println("BNO055 within tolerance");
+  Serial.println("AT BNO055 within tolerance");
   Serial.println(euler.x());
 }

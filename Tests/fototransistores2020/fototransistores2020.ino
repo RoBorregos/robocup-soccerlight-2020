@@ -14,11 +14,11 @@ bool right = 0;
 bool left = 0;
 
 /* Multiplexer Variables */
-const int SIG = A4;
-const int S0 = 11;
-const int S1 = 10;
-const int S2 = 9;
-const int S3 = 8;
+const int SIG = A6;
+const int S0 = 12;
+const int S1 = 11;
+const int S2 = 10;
+const int S3 = 9;
 
 void setup() {
   /* Initialize serial communication */
@@ -36,8 +36,5 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  lines();
-  photoresistors();
-  linesPrint();
-  delay(1000);
+  Serial.println(analogRead(A0)); //1101
 }

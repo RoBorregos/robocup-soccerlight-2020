@@ -4,8 +4,8 @@ void seeker(){
   Serial.print("Direction = ");
   switch(InfraredBall.Direction){
     case 1: // Back Left.
-      ::dirAngle = 180;
-      Serial.println("180");
+      ::dirAngle = -180;
+      Serial.println("-180");
       break;
     case 2: // Back Left.
       ::dirAngle = -150;
@@ -22,41 +22,39 @@ void seeker(){
     case 5: // Front.
       ::dirAngle = 0;
       Serial.println("0");
+      
       VL53L0X_RangingMeasurementData_t measure;
       lox.rangingTest(&measure, false);
-      if(measure.RangeStatus != 4 && measure.RangeMilliMeter <= RANGE) { // 45 degree turn to aproach ball in corners
-          PixyUpdate();
+      if(measure.RangeStatus != 4 && measure.RangeMilliMeter <= RANGE) {
+        Serial.print("Ball in mouth = ");
+        Serial.println(measure.RangeMilliMeter);
+          pixyUpdate();
           if(pixy.ccc.numBlocks && pixy.ccc.blocks[0].m_signature == SIG){
-            if(pixy.ccc.blocks[0].m_width < 200){        
+            if(pixy.ccc.blocks[0].m_width < 250){        
               if(pixy.ccc.blocks[0].m_x < 158 - Ptol || pixy.ccc.blocks[0].m_x > 158 + Ptol){
                 do{
+                  Serial.println("Loop with pixy");
                   center();
                   // kicker
                   motors(::dirAngle);
-                  InfraredResult InfraredBall = InfraredSeeker::ReadAC();
-                  VL53L0X_RangingMeasurementData_t measure;
+                  InfraredBall = InfraredSeeker::ReadAC();
                   lox.rangingTest(&measure, false);
                 }
-                while(InfraredBall.Direction == 5 && measure.RangeStatus != 4 && measure.RangeMilliMeter <= RANGE);
-                }                        
+                while(InfraredBall.Direction == 5 && measure.RangeMilliMeter <= RANGE);
+                }                       
               }              
             }
-            else if(Ppos == 3){   // Goal is to the right.
-              int turn = 25; // Calibrate.
-              // turn 25 degrees to the right.
+            else if(Ppos == 3 || Ppos == 1){   // Goal is to the right.
+              int turn = (Ppos == 3) ? 25 : -25; // turn 25 degrees to the right or to the left.
+              do{
+                Serial.println("Loop without pixy");
+                angleTurn(turn, 20);
+                motors(::dirAngle);
+                InfraredBall = InfraredSeeker::ReadAC();
+                lox.rangingTest(&measure, false);
+              }
+              while(InfraredBall.Direction == 5 && measure.RangeMilliMeter <= RANGE);
             }
-            else if(Ppos == 1){   // Goal is to the left.
-              int turn = -25; // Calibrate.
-              // turn 25 degrees to the left.
-            }
-            do{
-              angleTurn(turn, 15);
-              motors(::dirAngle);
-              InfraredResult InfraredBall = InfraredSeeker::ReadAC();
-              VL53L0X_RangingMeasurementData_t measure;
-              lox.rangingTest(&measure, false);
-            }
-            while(InfraredBall.Direction == 5 && measure.RangeStatus != 4 && measure.RangeMilliMeter <= RANGE);
           }
           
       break;
@@ -77,8 +75,10 @@ void seeker(){
       Serial.println("180");
       break;
   } 
-  if(InfraredBall.Direction == 0){
-    motorsOff();
+  if(InfraredBall.Direction == 0){ // Fix this.
+    ::dirAngle = 120;
+    motors(::dirAngle);
+    // motorsOff();
     Serial.println("Off");
   }
   else{

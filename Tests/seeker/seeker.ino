@@ -1,8 +1,8 @@
-#include <HTInfraredSeeker.h>
+  #include <HTInfraredSeeker.h>
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("Dir\tStrength");
   Serial.println();
   InfraredSeeker::Initialize();

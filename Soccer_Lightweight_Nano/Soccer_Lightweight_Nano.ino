@@ -1,12 +1,12 @@
 // Soccer Lightweight Junior 2020.
-// Created by RoBorregos member Keven G. Arroyo.
+// Created by RoBorregos
 
 #include <Type4067Mux.h>
 
-#define RANGO 870
+#define RANGO 55
 
 // Mux Object.
-Type4067Mux mux(A4, INPUT, ANALOG, 2, 3, 4, 5);
+Type4067Mux mux(A6, INPUT, ANALOG, 12, 11, 10, 9);
 
 static const int PR[] = {A0,A1,A2,A3};
 
@@ -16,10 +16,10 @@ bool photoresistors();
 void interrupt();
 
 // Nano to Mega Communication.
-const int COMPIN1 = 6;
+const int COMPIN1 = 3;
 
 // Interrupt Pin.
-const int INTRR = 12;
+const int INTRR = 2;
 
 // unsigned long long timeTrack = 0;
 
@@ -31,16 +31,14 @@ void setup() {
   pinMode(COMPIN1, OUTPUT);
   pinMode(INTRR, OUTPUT);
 
-  /*
   pinMode(PR[0], INPUT);
   pinMode(PR[1], INPUT);
   pinMode(PR[2], INPUT);
   pinMode(PR[3], INPUT);
-  */
-  
 }
 
 // The loop function runs over and over again forever.
 void loop() {
   interrupt();
+  linesPrint();
 }

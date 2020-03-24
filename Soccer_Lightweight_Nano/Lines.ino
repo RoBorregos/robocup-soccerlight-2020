@@ -13,10 +13,8 @@ void linesPrint(){
       Serial.print(mux.read(i));
       Serial.print("\t");
   }
-
-  /*
-  for (int i = 0; i < 15; i++){
-    if (i == 0){
+  for (int i = 0; i < 4; i++) {
+      if (i == 0){
         Serial.println("\nBackLeft");
       }
       if (i == 2){
@@ -25,6 +23,4 @@ void linesPrint(){
       Serial.print(analogRead(PR[i]));
       Serial.print("\t");
   }
-  */
-  
 }
