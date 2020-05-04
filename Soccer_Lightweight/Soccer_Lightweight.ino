@@ -9,7 +9,7 @@
 #include <Pixy2.h>
 #include <utility/imumaths.h>
 #include <Wire.h>
-
+#include <Motors.h>
 
 bool bouncing();
 int error(float, float);
@@ -19,10 +19,8 @@ void angleTurn(int, int);
 void center();
 void defense();
 void lines();
-void motors(int);
 void pixyUpdate();
 void seeker();
-void turn(bool, int);
 
 
 // Pixy Object.
@@ -68,15 +66,7 @@ const int RANGE = 50;
 
 // Motors Variables.
 volatile int dirAngle = 0;  // Direction angle for motors.
-
-const int MOTOR1A = 4; 
-const int MOTOR1B = 3;
-
-const int MOTOR2A = 8; 
-const int MOTOR2B = 7;
-
-const int MOTOR3A = 6; 
-const int MOTOR3B = 5;
+Motors robot(4,3,8,7,6,5);
 
 // Photoresistors Variables.
 const int NANOPIN1 = 22; 
@@ -92,6 +82,8 @@ void setup() {
   Serial.begin(9600);
   Serial.println("Setup");
 
+  robot.InitializeMotors();
+  
   pinMode(LEDPIN1, OUTPUT);
   pinMode(LEDPIN2, OUTPUT);
   pinMode(LEDPIN3, OUTPUT);
@@ -100,7 +92,7 @@ void setup() {
   pinMode(LEDPIN6, OUTPUT);
   
   digitalWrite(LEDPIN3, HIGH); // On LED
-
+  
   // VL53L0X Setup.
   Serial.println("VL53L0X Setup");
   while(!lox.begin()) {
@@ -146,14 +138,6 @@ void setup() {
     
   Serial.println("BNO055 Calibrated");
 
-  // Motors Setup.
-  pinMode(MOTOR1A, OUTPUT);
-  pinMode(MOTOR1B, OUTPUT);
-  pinMode(MOTOR2A, OUTPUT);
-  pinMode(MOTOR2B, OUTPUT);
-  pinMode(MOTOR3A, OUTPUT);   
-  pinMode(MOTOR3B, OUTPUT);
-
   // Seeker Setup.
   InfraredSeeker::Initialize();
 
@@ -165,12 +149,13 @@ void setup() {
 
   // Interrupt Setup.
   attachInterrupt(digitalPinToInterrupt(INTERRUPT), lines, RISING);
+  
 }
 
 // The loop function runs over and over again forever.
 void loop() {   
-  seeker();
-  angleFix();
+   seeker();
+   angleFix();
   /*
   timeTrack = millis();
   cli(); // Disable interrupts.

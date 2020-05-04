@@ -18,7 +18,7 @@ bool bouncing(){
       else{
         ::dirAngle = (InfraredBall.Direction >= 1 && InfraredBall.Direction <= 3) ? -90 : 90;
       }
-      motors(::dirAngle);
+     robot.moveMotors(::dirAngle, 255);
       reset = true;
     }    
     timeTrack = millis();

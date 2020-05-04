@@ -14,7 +14,7 @@ void lines(){
     ::dirAngle += 180;
   }
   
-  motors(::dirAngle);
+ robot.moveMotors(::dirAngle, 255);
 
   bool nano;
 

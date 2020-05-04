@@ -41,10 +41,10 @@ void defense(){
       break;
   } 
   if(InfraredBall.Direction == 0){ // Fix this.
-    motorsOff();
+    robot.stopMotors();
     Serial.println("Off");
   }
   else{
-    motors(::dirAngle);
+   robot.moveMotors(::dirAngle, 255);
   }
 }

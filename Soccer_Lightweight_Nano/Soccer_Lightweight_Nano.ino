@@ -3,7 +3,7 @@
 
 #include <Type4067Mux.h>
 
-#define RANGO 55
+#define RANGO 150
 
 // Mux Object.
 Type4067Mux mux(A6, INPUT, ANALOG, 12, 11, 10, 9);
