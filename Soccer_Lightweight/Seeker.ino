@@ -35,8 +35,7 @@ void seeker(){
                 do{
                   Serial.println("Loop with pixy");
                   center();
-                  // kicker
-                  motors(::dirAngle);
+                 robot.moveMotors(::dirAngle, 255);
                   InfraredBall = InfraredSeeker::ReadAC();
                   lox.rangingTest(&measure, false);
                 }
@@ -44,17 +43,19 @@ void seeker(){
                 }                       
               }              
             }
+            
             else if(Ppos == 3 || Ppos == 1){   // Goal is to the right.
               int turn = (Ppos == 3) ? 25 : -25; // turn 25 degrees to the right or to the left.
               do{
                 Serial.println("Loop without pixy");
                 angleTurn(turn, 20);
-                motors(::dirAngle);
+               robot.moveMotors(::dirAngle, 255);
                 InfraredBall = InfraredSeeker::ReadAC();
                 lox.rangingTest(&measure, false);
               }
               while(InfraredBall.Direction == 5 && measure.RangeMilliMeter <= RANGE);
             }
+            
           }
           
       break;
@@ -76,12 +77,12 @@ void seeker(){
       break;
   } 
   if(InfraredBall.Direction == 0){ // Fix this.
-    ::dirAngle = 120;
-    motors(::dirAngle);
-    // motorsOff();
+    ::dirAngle = -130;
+   robot.moveMotors(::dirAngle, 255);
+    // robot.stopMotors();
     Serial.println("Off");
   }
   else{
-    motors(::dirAngle);
+   robot.moveMotors(::dirAngle, 255);
   }
 }

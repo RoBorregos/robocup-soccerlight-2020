@@ -4,18 +4,18 @@ void center(){
   if(pixy.ccc.numBlocks && pixy.ccc.blocks[0].m_signature == SIG){
     while(pixy.ccc.blocks[0].m_x < 158 - Ptol || pixy.ccc.blocks[0].m_x > 158 + Ptol){
       if(pixy.ccc.blocks[0].m_x < 158 - Ptol){
-        turn(true, 40);
+        robot.turnLeft(70);
         Serial.println("Pixy Turn Left");
       }
       else if(pixy.ccc.blocks[0].m_x > 158 + Ptol){
-        turn(false, 40);
+        robot.turnRight(70);
         Serial.println("Pixy Turn Right");
       }
       pixy.ccc.getBlocks();
-      motorsOff();
+      robot.stopMotors();
     }
     Serial.println("Pixy okay");
-    motorsOff();
+    robot.stopMotors();
   }
   else{
     Serial.println("Pixy nothing detected");
